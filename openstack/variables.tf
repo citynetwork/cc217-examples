@@ -7,7 +7,7 @@ variable "image" {
 }
 variable "flavor" {
   type = string
-  default = "2C-2GB"
+  default = "2C-2GB-20GB"
 }
 variable "kubernetes_version" {
   type = string
