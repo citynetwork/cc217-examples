@@ -3,7 +3,7 @@ resource "openstack_compute_keypair_v2" "keypair" {
   public_key = "${file(pathexpand("~/.ssh/id_rsa.pub"))}"
 }
 
-resource "openstack_containerinfra_clustertemplate_v1" "cluster-template" {
+resource "openstack_containerinfra_clustertemplate_v1" "kubernetes-cluster-template" {
   name = var.template_name
   image = var.image
   coe = "kubernetes"
@@ -23,11 +23,11 @@ resource "openstack_containerinfra_clustertemplate_v1" "cluster-template" {
   }
 }
 
-resource "openstack_containerinfra_cluster_v1" "cn-caas-cluster" {
- name = var.cluster_name
- cluster_template_id = openstack_containerinfra_clustertemplate_v1.cluster-template.id
- master_count = 1
- node_count = 1
- keypair = openstack_compute_keypair_v2.keypair.id
- create_timeout = 60
+resource "openstack_containerinfra_cluster_v1" "kubernetes-cluster" {
+  name = var.cluster_name
+  cluster_template_id = openstack_containerinfra_clustertemplate_v1.kubernetes-cluster-template.id
+  master_count = 1
+  node_count = 1
+  keypair = openstack_compute_keypair_v2.keypair.id
+  create_timeout = 60
 }
