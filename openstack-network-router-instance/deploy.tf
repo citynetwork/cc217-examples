@@ -1,7 +1,3 @@
-data "openstack_networking_network_v2" "external_network" {
-  name = var.external_network
-}
-
 resource "openstack_compute_keypair_v2" "keypair" {
   name = var.keypair_name
   public_key = "${file(pathexpand("~/.ssh/id_rsa.pub"))}"
