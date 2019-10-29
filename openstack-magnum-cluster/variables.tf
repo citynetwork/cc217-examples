@@ -11,7 +11,7 @@ variable "flavor" {
 }
 variable "kubernetes_version" {
   type = string
-  default = "1.15.3"
+  default = "1.15.5"
 }
 variable "template_name" {
   type = string
