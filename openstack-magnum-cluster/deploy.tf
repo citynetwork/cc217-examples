@@ -19,6 +19,7 @@ resource "openstack_containerinfra_clustertemplate_v1" "kubernetes-cluster-templ
   # master_lb_enabled must be true if master_count is > 1
   master_lb_enabled = false
   labels = {
+    heat_container_agent_tag = "train-stable"
     kube_tag = "v${var.kubernetes_version}"
   }
 }
