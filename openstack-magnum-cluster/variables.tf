@@ -3,7 +3,7 @@ variable "keypair_name" {
 }
 variable "image" {
   type = string
-  default = "Fedora Atomic 27"
+  default = "Fedora Atomic 29 [2019-08-20]"
 }
 variable "flavor" {
   type = string
@@ -11,7 +11,7 @@ variable "flavor" {
 }
 variable "kubernetes_version" {
   type = string
-  default = "1.15.5"
+  default = "1.15.7"
 }
 variable "template_name" {
   type = string
