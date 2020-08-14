@@ -1,3 +1,6 @@
+provider "openstack" {                                                                                                               
+  version =  "< 1.30.0"                                                                                                              
+}
 resource "openstack_compute_keypair_v2" "keypair" {
   name = var.keypair_name
   public_key = "${file(pathexpand("~/.ssh/id_rsa.pub"))}"
@@ -19,7 +22,7 @@ resource "openstack_containerinfra_clustertemplate_v1" "kubernetes-cluster-templ
   # master_lb_enabled must be true if master_count is > 1
   master_lb_enabled = false
   labels = {
-    kube_tag = "v${var.kubernetes_version}"
+    heat_container_agent_tag = "train-stable"
   }
 }
 
