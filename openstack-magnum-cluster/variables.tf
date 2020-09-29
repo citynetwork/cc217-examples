@@ -3,7 +3,7 @@ variable "keypair_name" {
 }
 variable "image" {
   type = string
-  default = "Fedora Atomic 29 "
+  default = "Fedora CoreOS 32"
 }
 variable "flavor" {
   type = string
