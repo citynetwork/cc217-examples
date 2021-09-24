@@ -29,7 +29,7 @@ variable external_network {
 
 variable "image" {
   type = string
-  default = "Ubuntu 18.04 Bionic Beaver"
+  default = "Ubuntu 20.04 Focal Fossa"
 }
 
 variable "flavor" {

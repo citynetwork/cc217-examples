@@ -1,6 +1,3 @@
-provider "openstack" {                                                                                                               
-  version =  "< 1.30.0"                                                                                                              
-}
 resource "openstack_compute_keypair_v2" "keypair" {
   name = var.keypair_name
   public_key = "${file(pathexpand("~/.ssh/id_rsa.pub"))}"
@@ -31,6 +28,7 @@ resource "openstack_containerinfra_cluster_v1" "kubernetes-cluster" {
   cluster_template_id = openstack_containerinfra_clustertemplate_v1.kubernetes-cluster-template.id
   master_count = 1
   node_count = 1
+  floating_ip_enabled = true
   keypair = openstack_compute_keypair_v2.keypair.id
   create_timeout = 60
 }
