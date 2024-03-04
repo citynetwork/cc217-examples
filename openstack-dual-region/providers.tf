@@ -1,6 +1,6 @@
 provider "openstack" {
-  region = "dx1"
-  auth_url = "https://dx1.citycloud.com:5000/v3"
+  region = "Kna1"
+  auth_url = "https://kna1.citycloud.com:5000/v3"
 }
 
 provider "openstack" {
