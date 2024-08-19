@@ -29,7 +29,7 @@ variable external_network {
 
 variable "image" {
   type = string
-  default = "Ubuntu 20.04 Focal Fossa x86_64"
+  default = "Ubuntu 22.04 Jammy Jellyfish x86_64"
 }
 
 variable "flavor" {
