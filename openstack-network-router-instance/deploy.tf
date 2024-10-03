@@ -67,4 +67,5 @@ resource "openstack_compute_floatingip_associate_v2" "floatingip" {
   floating_ip = "${openstack_networking_floatingip_v2.floatingip.address}"
   instance_id = "${openstack_compute_instance_v2.instance.id}"
   fixed_ip    = "${openstack_compute_instance_v2.instance.network.0.fixed_ip_v4}"
+  depends_on  = [router_interface]
 }
