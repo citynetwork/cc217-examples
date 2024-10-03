@@ -36,6 +36,7 @@ resource "openstack_vpnaas_site_connection_v2" "conn_left" {
   peer_address = openstack_vpnaas_service_v2.vpn_service_right.external_v4_ip
   local_ep_group_id = openstack_vpnaas_endpoint_group_v2.epg_subnet_left.id
   peer_ep_group_id  = openstack_vpnaas_endpoint_group_v2.epg_cidr_right.id
+  depends_on  = [openstack_networking_router_interface_v2.router_interface]
 }
 
 # "Right" region
@@ -82,4 +83,5 @@ resource "openstack_vpnaas_site_connection_v2" "conn_right" {
   local_ep_group_id = openstack_vpnaas_endpoint_group_v2.epg_subnet_right.id
   peer_ep_group_id  = openstack_vpnaas_endpoint_group_v2.epg_cidr_left.id
   provider = openstack.right
+  depends_on  = [openstack_networking_router_interface_v2.router_interface_right]
 }
