@@ -1,33 +1,33 @@
 # "Left" region
 
 resource "openstack_vpnaas_ike_policy_v2" "ike_policy_left" {
-  name = "ike-policy"
+  name = var.ike_policy_name
 }
 
 resource "openstack_vpnaas_ipsec_policy_v2" "ipsec_policy_left" {
-  name = "ipsec-policy"
+  name = var.ipsec_policy_name
 }
 
 resource "openstack_vpnaas_service_v2" "vpn_service_left" {
-  name = "vpn-service"
+  name = var.vpn_service_name
   router_id = openstack_networking_router_v2.router.id
   admin_state_up = "true"
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_subnet_left" {
-  name = "epg-subnet-left"
+  name = var.epg_subnet_name
   type = "subnet"
   endpoints = [openstack_networking_subnet_v2.subnet.id,]
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_cidr_right" {
-  name = "epg-cidr-right"
+  name = var.epg_cidr_name
   type = "cidr"
   endpoints = [openstack_networking_subnet_v2.subnet_right.cidr,]
 }
 
 resource "openstack_vpnaas_site_connection_v2" "conn_left" {
-  name = "vpn-connection"
+  name = var.vpn_connection_name
   ikepolicy_id = openstack_vpnaas_ike_policy_v2.ike_policy_left.id
   ipsecpolicy_id = openstack_vpnaas_ipsec_policy_v2.ipsec_policy_left.id
   vpnservice_id = openstack_vpnaas_service_v2.vpn_service_left.id
@@ -42,38 +42,38 @@ resource "openstack_vpnaas_site_connection_v2" "conn_left" {
 # "Right" region
 
 resource "openstack_vpnaas_ike_policy_v2" "ike_policy_right" {
-  name = "ike_policy"
+  name = var.ike_policy_name
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_ipsec_policy_v2" "ipsec_policy_right" {
-  name = "ipsec-policy"
+  name = var.ipsec_policy_name
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_service_v2" "vpn_service_right" {
-  name = "vpn-service"
+  name = var.vpn_service_name
   router_id = openstack_networking_router_v2.router_right.id
   admin_state_up = "true"
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_subnet_right" {
-  name = "epg-subnet-right"
+  name = var.epg_subnet_name
   type = "subnet"
   endpoints = [openstack_networking_subnet_v2.subnet_right.id,]
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_cidr_left" {
-  name = "epg-cidr-left"
+  name = var.epg_cidr_name
   type = "cidr"
   endpoints = [openstack_networking_subnet_v2.subnet.cidr,]
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_site_connection_v2" "conn_right" {
-  name = "vpn-connection"
+  name = var.vpn_connection_name
   ikepolicy_id = openstack_vpnaas_ike_policy_v2.ike_policy_right.id
   ipsecpolicy_id = openstack_vpnaas_ipsec_policy_v2.ipsec_policy_right.id
   vpnservice_id = openstack_vpnaas_service_v2.vpn_service_right.id

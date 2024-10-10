@@ -48,3 +48,27 @@ variable "region_right" {
 variable "psk" {
   type = string
 }
+
+variable "ike_policy_name" {
+  type = string
+}
+
+variable "ipsec_policy_name" {
+  type = string
+}
+
+variable "vpn_service_name" {
+  type = string
+}
+
+variable "vpn_connection_name" {
+  type = string
+}
+
+variable "epg_subnet_name" {
+  type = string
+}
+
+variable "epg_cidr_name" {
+  type = string
+}
