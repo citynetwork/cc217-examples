@@ -57,7 +57,7 @@ resource "openstack_compute_instance_v2" "instance" {
   flavor_name = var.flavor
   user_data = "${file("config.yaml")}"
   key_pair = openstack_compute_keypair_v2.keypair.name
-  security_groups = [ openstack_networking_secgroup_v2.secgroup.name ]
+  security_groups = [ openstack_networking_secgroup_v2.secgroup.id ]
   network {
     uuid = openstack_networking_network_v2.network.id
   }
