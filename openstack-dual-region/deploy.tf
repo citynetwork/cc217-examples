@@ -63,6 +63,16 @@ resource "openstack_compute_instance_v2" "instance" {
   network {
     uuid = openstack_networking_network_v2.network.id
   }
+  block_device  {
+    uuid = data.openstack_images_image_v2.ubuntu_jammy.id
+    source_type = "image"
+    destination_type = "volume"
+    boot_index = 0
+    volume_size = var.size
+    delete_on_termination = true
+  }
+}
+
 }
 
 resource "openstack_compute_floatingip_associate_v2" "floatingip" {
@@ -139,7 +149,6 @@ resource "openstack_networking_secgroup_rule_v2" "icmp_right" {
 
 resource "openstack_compute_instance_v2" "instance_right" {
   name = var.instance_name
-  image_name = var.image
   flavor_name = var.flavor
   user_data = "${file("config.yaml")}"
   key_pair = openstack_compute_keypair_v2.keypair_right.name
@@ -148,6 +157,14 @@ resource "openstack_compute_instance_v2" "instance_right" {
     uuid = openstack_networking_network_v2.network_right.id
   }
   provider = openstack.right
+  block_device  {
+    uuid = data.openstack_images_image_v2.ubuntu_jammy_right.id
+    source_type = "image"
+    destination_type = "volume"
+    boot_index = 0
+    volume_size = var.size
+    delete_on_termination = true
+  }
 }
 
 resource "openstack_compute_floatingip_associate_v2" "floatingip_right" {
