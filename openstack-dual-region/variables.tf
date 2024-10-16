@@ -34,7 +34,12 @@ variable "image" {
 
 variable "flavor" {
   type = string
-  default = "2C-2GB-20GB"
+  default = "b.2c2gb"
+}
+
+variable "size" {
+  type = string
+  default = "20"
 }
 
 variable "region_left" {
