@@ -73,8 +73,6 @@ resource "openstack_compute_instance_v2" "instance" {
   }
 }
 
-}
-
 resource "openstack_compute_floatingip_associate_v2" "floatingip" {
   floating_ip = "${openstack_networking_floatingip_v2.floatingip.address}"
   instance_id = "${openstack_compute_instance_v2.instance.id}"
