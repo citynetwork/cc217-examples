@@ -51,6 +51,11 @@ resource "openstack_networking_secgroup_rule_v2" "icmp" {
   remote_ip_prefix = "0.0.0.0/0"
 }
 
+resource "openstack_networking_port_v2" "instance_port" {
+  network_id = openstack_networking_network_v2.network.id
+  depends_on  = [openstack_networking_subnet_v2.subnet]
+}
+
 resource "openstack_compute_instance_v2" "instance" {
   name = var.instance_name
   flavor_name = var.flavor
@@ -58,7 +63,7 @@ resource "openstack_compute_instance_v2" "instance" {
   key_pair = openstack_compute_keypair_v2.keypair.name
   security_groups = [ openstack_networking_secgroup_v2.secgroup.id ]
   network {
-    uuid = openstack_networking_network_v2.network.id
+    port = openstack_networking_port_v2.instance_port.id
   }
   block_device  {
     uuid = data.openstack_images_image_v2.ubuntu_jammy.id
@@ -71,10 +76,8 @@ resource "openstack_compute_instance_v2" "instance" {
 
 }
 
-
-resource "openstack_compute_floatingip_associate_v2" "floatingip" {
+resource "openstack_networking_floatingip_associate_v2" "floatingip" {
   floating_ip = "${openstack_networking_floatingip_v2.floatingip.address}"
-  instance_id = "${openstack_compute_instance_v2.instance.id}"
-  fixed_ip    = "${openstack_compute_instance_v2.instance.network.0.fixed_ip_v4}"
+  port_id     = "${openstack_networking_port_v2.instance_port.id}"
   depends_on  = [openstack_networking_router_interface_v2.router_interface]
 }
