@@ -55,6 +55,7 @@ resource "openstack_networking_secgroup_rule_v2" "icmp" {
 
 resource "openstack_networking_port_v2" "instance_port" {
   network_id = openstack_networking_network_v2.network.id
+  security_group_ids = [ openstack_networking_secgroup_v2.secgroup.id ]
   depends_on  = [openstack_networking_subnet_v2.subnet]
 }
 
@@ -64,7 +65,6 @@ resource "openstack_compute_instance_v2" "instance" {
   flavor_name = var.flavor
   user_data = "${file("config.yaml")}"
   key_pair = openstack_compute_keypair_v2.keypair.name
-  security_groups = [ openstack_networking_secgroup_v2.secgroup.id ]
   network {
     port = openstack_networking_port_v2.instance_port.id
   }
@@ -151,6 +151,7 @@ resource "openstack_networking_secgroup_rule_v2" "icmp_right" {
 
 resource "openstack_networking_port_v2" "instance_port_right" {
   network_id = openstack_networking_network_v2.network_right.id
+  security_group_ids = [ openstack_networking_secgroup_v2.secgroup_right.id ]
   depends_on  = [openstack_networking_subnet_v2.subnet_right]
   provider = openstack.right
 }
@@ -160,7 +161,6 @@ resource "openstack_compute_instance_v2" "instance_right" {
   flavor_name = var.flavor
   user_data = "${file("config.yaml")}"
   key_pair = openstack_compute_keypair_v2.keypair_right.name
-  security_groups = [ openstack_networking_secgroup_v2.secgroup_right.id ]
   network {
     port = openstack_networking_port_v2.instance_port_right.id
   }
