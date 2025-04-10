@@ -16,3 +16,11 @@ data "openstack_images_image_v2" "ubuntu_jammy_right" {
   provider = openstack.right
 }
 
+data "openstack_networking_subnetpool_v2" "ipv6_pool" {
+  name = var.ipv6_subnetpool
+}
+
+data "openstack_networking_subnetpool_v2" "ipv6_pool_right" {
+  name = var.ipv6_subnetpool
+  provider = openstack.right
+}

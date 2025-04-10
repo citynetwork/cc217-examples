@@ -17,13 +17,13 @@ resource "openstack_vpnaas_service_v2" "vpn_service_left" {
 resource "openstack_vpnaas_endpoint_group_v2" "epg_subnet_left" {
   name = var.epg_subnet_name
   type = "subnet"
-  endpoints = [openstack_networking_subnet_v2.subnet.id,]
+  endpoints = [openstack_networking_subnet_v2.subnet_ipv4.id,]
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_cidr_right" {
   name = var.epg_cidr_name
   type = "cidr"
-  endpoints = [openstack_networking_subnet_v2.subnet_right.cidr,]
+  endpoints = [openstack_networking_subnet_v2.subnet_ipv4_right.cidr,]
 }
 
 resource "openstack_vpnaas_site_connection_v2" "conn_left" {
@@ -36,7 +36,7 @@ resource "openstack_vpnaas_site_connection_v2" "conn_left" {
   peer_address = openstack_vpnaas_service_v2.vpn_service_right.external_v4_ip
   local_ep_group_id = openstack_vpnaas_endpoint_group_v2.epg_subnet_left.id
   peer_ep_group_id  = openstack_vpnaas_endpoint_group_v2.epg_cidr_right.id
-  depends_on  = [openstack_networking_router_interface_v2.router_interface]
+  depends_on  = [openstack_networking_router_interface_v2.router_interface_ipv4]
 }
 
 # "Right" region
@@ -61,14 +61,14 @@ resource "openstack_vpnaas_service_v2" "vpn_service_right" {
 resource "openstack_vpnaas_endpoint_group_v2" "epg_subnet_right" {
   name = var.epg_subnet_name
   type = "subnet"
-  endpoints = [openstack_networking_subnet_v2.subnet_right.id,]
+  endpoints = [openstack_networking_subnet_v2.subnet_ipv4_right.id,]
   provider = openstack.right
 }
 
 resource "openstack_vpnaas_endpoint_group_v2" "epg_cidr_left" {
   name = var.epg_cidr_name
   type = "cidr"
-  endpoints = [openstack_networking_subnet_v2.subnet.cidr,]
+  endpoints = [openstack_networking_subnet_v2.subnet_ipv4.cidr,]
   provider = openstack.right
 }
 
@@ -83,5 +83,5 @@ resource "openstack_vpnaas_site_connection_v2" "conn_right" {
   local_ep_group_id = openstack_vpnaas_endpoint_group_v2.epg_subnet_right.id
   peer_ep_group_id  = openstack_vpnaas_endpoint_group_v2.epg_cidr_left.id
   provider = openstack.right
-  depends_on  = [openstack_networking_router_interface_v2.router_interface_right]
+  depends_on  = [openstack_networking_router_interface_v2.router_interface_ipv4_right]
 }
